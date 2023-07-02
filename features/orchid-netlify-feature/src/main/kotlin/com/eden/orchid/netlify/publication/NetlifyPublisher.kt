@@ -24,12 +24,11 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.Instant
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
-import kotlin.time.toDuration
 
 @OptIn(ExperimentalTime::class)
 @Description(value = "Upload your site directly to Netlify, while using your favorite CI platform.", name = "Netlify")
@@ -56,7 +55,7 @@ constructor(
             // siteId not provided, use the baseUrl instead
             try {
                 siteId = URL(context.baseUrl).host
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
 
@@ -263,11 +262,11 @@ constructor(
 
             // if we are nearing the rate limit, pause down a bit until it resets
             if ((rateLimitRemaining * 1.0 / rateLimitLimit * 1.0) < 0.1) {
-                val totalMillis = Math.abs(d.toMillis())
-                Clog.d("        Rate limit running low, sleeping for {}", totalMillis.toDuration(TimeUnit.MILLISECONDS))
+                val totalMillis = abs(d.toMillis())
+                Clog.d("        Rate limit running low, sleeping for {}", totalMillis.milliseconds)
                 Thread.sleep(totalMillis)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         return this

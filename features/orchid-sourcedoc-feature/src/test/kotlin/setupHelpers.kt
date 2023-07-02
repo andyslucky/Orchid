@@ -3,6 +3,7 @@ package com.eden.orchid.sourcedoc
 import com.eden.orchid.strikt.pageWasRendered
 import com.eden.orchid.testhelpers.TestResults
 import strikt.api.Assertion
+import java.util.*
 
 const val separator = "{\"type\": \"separator\"}"
 
@@ -18,7 +19,7 @@ fun themeMenuModulesSetup(type: String): String {
         |    "type": "sourcedocModules",
         |    "moduleType": "${type}doc",
         |    "asSubmenu": true,
-        |    "submenuTitle": "${type.capitalize()} Modules"
+        |    "submenuTitle": "${type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} Modules"
         |}
         """.trimMargin()
 }
@@ -32,7 +33,13 @@ fun themeMenuKindSetup(type: String, nodeKind: String, name: String? = null): St
         |    "moduleName": "$name",
         |    "node": "$nodeKind",
         |    "asSubmenu": true,
-        |    "submenuTitle": "Module ${name.capitalize()} ${type.capitalize()}doc ${nodeKind.capitalize()}"
+        |    "submenuTitle": "Module ${name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} ${
+            type.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+        }doc ${nodeKind.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}"
         |}
         """.trimMargin()
     } else {
@@ -42,7 +49,13 @@ fun themeMenuKindSetup(type: String, nodeKind: String, name: String? = null): St
         |    "moduleType": "${type}doc",
         |    "node": "$nodeKind",
         |    "asSubmenu": true,
-        |    "submenuTitle": "${type.capitalize()}doc ${nodeKind.capitalize()}"
+        |    "submenuTitle": "${type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}doc ${
+            nodeKind.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+        }"
         |}
         """.trimMargin()
     }
@@ -60,7 +73,13 @@ fun themeMenuAllKindsSetup(type: String, nodeKind: String, name: String? = null)
         |    "moduleType": "${type}doc",
         |    "moduleName": "$name",
         |    "asSubmenu": true,
-        |    "submenuTitle": "Module ${name.capitalize()} ${type.capitalize()}doc ${nodeKind.capitalize()}"
+        |    "submenuTitle": "Module ${name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} ${
+            type.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+        }doc ${nodeKind.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}"
         |}
         """.trimMargin()
     } else {
@@ -69,7 +88,13 @@ fun themeMenuAllKindsSetup(type: String, nodeKind: String, name: String? = null)
         |    "type": "sourcedocPages",
         |    "moduleType": "${type}doc",
         |    "asSubmenu": true,
-        |    "submenuTitle": "${type.capitalize()}doc ${nodeKind.capitalize()}"
+        |    "submenuTitle": "${type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}doc ${
+            nodeKind.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+        }"
         |}
         """.trimMargin()
     }

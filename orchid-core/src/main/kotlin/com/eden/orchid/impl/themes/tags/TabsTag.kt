@@ -22,7 +22,7 @@ class TabsTag : TemplateTag("tabs", Type.Tabbed, true) {
         return Tab(key, content)
     }
 
-    class Tab(name: String?, content: String?) : TemplateTag.SimpleTab("tab", name, content) {
+    class Tab(name: String?, content: String?) : SimpleTab("tab", name, content) {
 
         @Option
         @Description("The title of the tab")

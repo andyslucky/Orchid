@@ -199,7 +199,7 @@ open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
             if (source.has("childrenPages")) {
                 val childrenPagesJson = source.getJSONObject("childrenPages")
                 for (key in childrenPagesJson.keySet()) {
-                    val childIndex = OrchidIndex.fromJSON(context, childrenPagesJson.getJSONObject(key))
+                    val childIndex = fromJSON(context, childrenPagesJson.getJSONObject(key))
                     index.childrenPages[key] = childIndex
                 }
             }

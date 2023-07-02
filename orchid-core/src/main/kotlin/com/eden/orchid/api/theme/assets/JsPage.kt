@@ -111,7 +111,7 @@ class JsPage(
         }
     }
 
-    override fun renderAssetToPage(): String? {
+    override fun renderAssetToPage(): String {
         return if (shouldInline) {
             (
                 applyStartTag() +
@@ -132,7 +132,7 @@ class JsPage(
         }
     }
 
-    private fun applyAsyncDefer(): String? {
+    private fun applyAsyncDefer(): String {
         var tagString = ""
         if (async) {
             tagString += " async"
@@ -143,7 +143,7 @@ class JsPage(
         return tagString
     }
 
-    private fun applyModuleNoModule(): String? {
+    private fun applyModuleNoModule(): String {
         var tagString = ""
         // if tagged as module, cannot be a `nomodule`
         if (module) {
@@ -154,19 +154,19 @@ class JsPage(
         return tagString
     }
 
-    private fun applyScriptSource(): String? {
+    private fun applyScriptSource(): String {
         return " src=\"${this.link}\">"
     }
 
-    private fun applyInlineScript(): String? {
+    private fun applyInlineScript(): String {
         return ">\n${resource.compileContent(context, this)}"
     }
 
-    private fun applyStartTag(): String? {
+    private fun applyStartTag(): String {
         return "<script"
     }
 
-    private fun applyCloseTag(): String? {
+    private fun applyCloseTag(): String {
         return "</script>"
     }
 }

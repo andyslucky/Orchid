@@ -38,7 +38,7 @@ class LoadFunction : TemplateFunction("load", false) {
 
     override fun parameters() = arrayOf(::resource.name, ::local.name, ::compile.name)
 
-    override fun apply(context: OrchidContext, page: OrchidPage?): Any? {
+    override fun apply(context: OrchidContext, page: OrchidPage?): Any {
         val foundResource = if (local)
             context.getDefaultResourceSource(LocalResourceSource, null).getResourceEntry(context, resource)
         else

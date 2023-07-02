@@ -1,7 +1,7 @@
+import org.gradle.accessors.dm.LibrariesForTestLibs
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import java.text.SimpleDateFormat
-import java.util.Date
-import org.gradle.accessors.dm.LibrariesForTestLibs
+import java.util.*
 
 plugins {
     idea
@@ -38,10 +38,9 @@ tasks.withType<JavaCompile> {
     targetCompatibility = Config.javaVersion
 }
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.useIR = true
     kotlinOptions {
         jvmTarget = Config.javaVersion
-        freeCompilerArgs = listOf("-Xjvm-default=compatibility", "-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = listOf("-Xjvm-default=compatibility", "-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=all")
     }
 }
 

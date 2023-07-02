@@ -6,7 +6,7 @@ import com.eden.orchid.api.compilers.OrchidParser
 import com.eden.orchid.api.resources.resource.OrchidResource
 import com.eden.orchid.utilities.OrchidUtils
 import com.eden.orchid.utilities.SuppressedWarnings
-import java.util.Arrays
+import java.util.*
 
 @Suppress(SuppressedWarnings.UNCHECKED_KOTLIN)
 internal class DefaultDataResourceSource(
@@ -47,7 +47,7 @@ internal class DefaultDataResourceSource(
 // Implementation
 // ---------------------------------------------------------------------------------------------------------------------
 
-    private fun getDatafiles(context: OrchidContext, directory: String): Map<String, Any?>? {
+    private fun getDatafiles(context: OrchidContext, directory: String): Map<String, Any?> {
         val files: List<OrchidResource> = context.getDefaultResourceSource(LocalResourceSource, null)
             .getResourceEntries(context, directory, context.parserExtensions.toTypedArray(), true)
         val allDatafiles: MutableMap<String, Any?> = HashMap()

@@ -1,10 +1,10 @@
 package com.eden.orchid.utilities
 
-public fun String.encodeSpaces(): String {
+fun String.encodeSpaces(): String {
     var output = ""
     var inTag = false
 
-    for (i in 0 until this.length) {
+    for (i in indices) {
         if (inTag) {
             if (this[i] == '>') {
                 inTag = false
@@ -31,6 +31,6 @@ public fun String.encodeSpaces(): String {
     return output
 }
 
-public fun String.nl2br(): String {
+fun String.nl2br(): String {
     return this.replace("\\n".toRegex(), "<br>")
 }

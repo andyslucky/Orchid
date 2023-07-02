@@ -2,6 +2,7 @@ package com.eden.orchid.api.generators
 
 import com.eden.orchid.api.options.Descriptive
 import com.eden.orchid.utilities.*
+import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -15,10 +16,16 @@ abstract class OrchidCollection<T : Collectible<*>>(
 
     val title: String
         get() {
-            val collectionTypeTitle = collectionType from { camelCase() } with { capitalize() } to { titleCase() }
+            val collectionTypeTitle = collectionType from { camelCase() } with {
+                replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }
+            } to { titleCase() }
             val collectionIdTitle: String? = collectionId
                 ?.from { camelCase() }
-                ?.with { capitalize() }
+                ?.with { replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } }
                 ?.to { titleCase() }
 
             return if (collectionIdTitle?.isNotBlank() == true && collectionTypeTitle != collectionIdTitle) {

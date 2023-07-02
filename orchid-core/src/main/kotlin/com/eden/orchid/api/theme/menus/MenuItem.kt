@@ -84,8 +84,8 @@ class MenuItem private constructor(
         return allData[key]
     }
 
-    fun toBuilder(): MenuItem.Builder {
-        return MenuItem.Builder(context)
+    fun toBuilder(): Builder {
+        return Builder(context)
             .title(title)
             .page(page)
             .children(children)
@@ -99,7 +99,7 @@ class MenuItem private constructor(
 // ---------------------------------------------------------------------------------------------------------------------
 
     class Builder(val context: OrchidContext) {
-        var children: MutableList<MenuItem.Builder>? = null
+        var children: MutableList<Builder>? = null
         var page: OrchidPage? = null
         var anchor: String? = null
         var title: String? = null
@@ -136,7 +136,7 @@ class MenuItem private constructor(
             return this
         }
 
-        fun childrenBuilders(children: MutableList<MenuItem.Builder>): Builder {
+        fun childrenBuilders(children: MutableList<Builder>): Builder {
             this.children = children
             return this
         }
@@ -146,7 +146,7 @@ class MenuItem private constructor(
             return this
         }
 
-        fun child(child: MenuItem.Builder): Builder {
+        fun child(child: Builder): Builder {
             if (children == null) {
                 children = ArrayList()
             }

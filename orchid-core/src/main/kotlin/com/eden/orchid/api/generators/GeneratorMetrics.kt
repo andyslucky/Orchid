@@ -2,12 +2,10 @@ package com.eden.orchid.api.generators
 
 import kotlin.math.floor
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 import kotlin.time.toDuration
 
-@OptIn(ExperimentalTime::class)
 class GeneratorMetrics
 @JvmOverloads
 constructor(
@@ -84,7 +82,7 @@ constructor(
         pageGenerationTimes.addAll(metric.getPageGenerationTimes()!!)
     }
 
-    fun getPageGenerationTimes(): List<Long>? {
+    fun getPageGenerationTimes(): List<Long> {
         return this.pageGenerationTimes
     }
 

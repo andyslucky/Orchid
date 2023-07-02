@@ -3,12 +3,7 @@ package com.eden.orchid.impl.themes.functions
 import clog.Clog
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.compilers.TemplateFunction
-import com.eden.orchid.api.options.annotations.BooleanDefault
-import com.eden.orchid.api.options.annotations.Description
-import com.eden.orchid.api.options.annotations.DoubleDefault
-import com.eden.orchid.api.options.annotations.IntDefault
-import com.eden.orchid.api.options.annotations.Option
-import com.eden.orchid.api.options.annotations.StringDefault
+import com.eden.orchid.api.options.annotations.*
 import com.eden.orchid.api.resources.thumbnails.Renameable
 import com.eden.orchid.api.resources.thumbnails.Resizable
 import com.eden.orchid.api.resources.thumbnails.Rotateable
@@ -222,7 +217,7 @@ class ImageFunction : BaseImageManipulationFunction("img", true) {
 
     override fun parameters() = arrayOf(::input.name, ::alt.name, ::alt.name)
 
-    override fun apply(context: OrchidContext, page: OrchidPage?): Any? {
+    override fun apply(context: OrchidContext, page: OrchidPage?): Any {
         val asset: AssetPage? = getAssetPage(context, page)
 
         return """ <img src="${asset?.link}" alt="$alt"> """

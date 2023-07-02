@@ -6,7 +6,7 @@ import com.eden.orchid.api.options.archetypes.ConfigArchetype
 import com.eden.orchid.utilities.SuppressedWarnings
 import java.io.StringReader
 import java.io.StringWriter
-import java.util.Properties
+import java.util.*
 import javax.inject.Inject
 
 @Archetype(value = ConfigArchetype::class, key = "services.parsers.properties")
@@ -22,7 +22,7 @@ constructor() : OrchidParser(50) {
     }
 
     @Suppress(SuppressedWarnings.UNCHECKED_KOTLIN)
-    override fun parse(extension: String, input: String): Map<String, Any>? {
+    override fun parse(extension: String, input: String): Map<String, Any> {
         try {
             val prop = Properties()
             prop.load(StringReader(input))

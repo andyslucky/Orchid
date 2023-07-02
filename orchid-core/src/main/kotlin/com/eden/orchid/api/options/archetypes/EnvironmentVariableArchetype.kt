@@ -17,7 +17,7 @@ class EnvironmentVariableArchetype : OptionArchetype {
             .filter { it.isAnnotationPresent(EnvironmentVariableAliases::class.java) }
             .flatMap {
                 val envAliases = it.getAnnotation(EnvironmentVariableAliases::class.java).value.toList()
-                val intersection = allEnvironmentVariables.keys.intersect(envAliases)
+                val intersection = allEnvironmentVariables.keys.intersect(envAliases.toSet())
 
                 val key: String = it.getAnnotation(Option::class.java).value.ifBlank {
                     it.name

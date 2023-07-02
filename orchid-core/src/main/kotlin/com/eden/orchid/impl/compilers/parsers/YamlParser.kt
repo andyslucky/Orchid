@@ -8,7 +8,6 @@ import com.eden.orchid.utilities.SuppressedWarnings
 import com.eden.orchid.utilities.logSyntaxError
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.parser.ParserException
-import java.util.HashMap
 import javax.inject.Inject
 
 @Archetype(value = ConfigArchetype::class, key = "services.parsers.yml")
@@ -32,7 +31,7 @@ constructor() : OrchidParser() {
                 return yamlData as Map<String, Any>
             } else if (yamlData is List<*>) {
                 val yamlObject = HashMap<String, Any>()
-                yamlObject[OrchidParser.arrayAsObjectKey] = yamlData
+                yamlObject[arrayAsObjectKey] = yamlData
                 return yamlObject
             }
         } catch (e: ParserException) {
