@@ -34,7 +34,7 @@ lang-json = { group = "org.json", name = "json", version = "20230618" }
 lang-yaml = { group = "org.yaml", name = "snakeyaml", version = "1.29" }
 lang-toml = { group = "com.moandjiezana.toml", name = "toml4j", version = "0.7.2" }
 lang-pebble = { group = "io.pebbletemplates", name = "pebble", version = "3.1.5" }
-lang-scss = { group = "io.bit3", name = "jsass", version = "5.10.3" }
+lang-scss = { group = "io.bit3", name = "jsass", version = "5.10.5" }
 lang-csv = { group = "com.univocity", name = "univocity-parsers", version = "2.9.1" }
 lang-asciidoc = { group = "org.asciidoctor", name = "asciidoctorj", version = "2.3.0" }
 lang-plantuml = { group = "net.sourceforge.plantuml", name = "plantuml", version = "1.2021.7" }
