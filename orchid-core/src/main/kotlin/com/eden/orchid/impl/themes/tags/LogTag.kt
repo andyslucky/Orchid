@@ -2,7 +2,6 @@ package com.eden.orchid.impl.themes.tags
 
 import clog.Clog
 import clog.dsl.tag
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.compilers.TemplateTag
 import com.eden.orchid.api.options.annotations.Description
@@ -25,7 +24,7 @@ class LogTag : TemplateTag("log", Type.Content, false) {
     override fun parameters() = arrayOf(::level.name, ::tag.name)
 
     override fun onRender(context: OrchidContext?, page: OrchidPage?) {
-        val clog = if (!EdenUtils.isEmpty(tag)) Clog.tag(tag) else Clog.getInstance()
+        val clog = if (tag.isNotBlank()) Clog.tag(tag) else Clog.getInstance()
 
         when (level.toLowerCase()) {
             "verbose" -> clog.v(content)

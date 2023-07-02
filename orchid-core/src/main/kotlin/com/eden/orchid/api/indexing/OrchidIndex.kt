@@ -1,13 +1,12 @@
 package com.eden.orchid.api.indexing
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.theme.pages.OrchidPage
 import com.eden.orchid.api.theme.pages.OrchidReference
 import com.eden.orchid.utilities.OrchidUtils
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.Arrays
+import java.util.*
 
 open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
     private val ownPages = ArrayList<OrchidPage>()
@@ -31,14 +30,14 @@ open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
     open fun addToIndex(taxonomy: String, page: OrchidPage) {
         val pathPieces = OrchidUtils.normalizePath(taxonomy).split("/").toTypedArray()
 
-        if (!EdenUtils.isEmpty(pathPieces)) {
+        if (pathPieces.isNotEmpty()) {
             addToIndex(pathPieces, page)
         }
     }
 
     fun addToIndex(pathPieces: Array<String>, page: OrchidPage) {
         // we have a path to add to this index
-        if (!EdenUtils.isEmpty(pathPieces) && !EdenUtils.isEmpty(pathPieces[0])) {
+        if (pathPieces.firstOrNull()?.isNotBlank() == true) {
 
             // we are at the correct index, because our own key is the current first level of `pathPieces`
             if (pathPieces[0] == ownKey) {
@@ -68,13 +67,13 @@ open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
     fun find(pathPieces: Array<String>): List<OrchidPage> {
         val foundPages = ArrayList<OrchidPage>()
         // we have a path to search
-        if (!EdenUtils.isEmpty(pathPieces) && !EdenUtils.isEmpty(pathPieces[0])) {
+        if (pathPieces.firstOrNull()?.isNotBlank() == true) {
             if (pathPieces.size == 1 && pathPieces[0] == ownKey) {
                 foundPages.addAll(this.allPages)
             } else {
                 if (childrenPages.containsKey(pathPieces[1])) {
                     foundPages.addAll(
-                        childrenPages[pathPieces[1]]!!.find(Arrays.copyOfRange(pathPieces, 1, pathPieces.size))
+                        childrenPages[pathPieces[1]]!!.find(pathPieces.copyOfRange(1, pathPieces.size))
                     )
                 }
             }
@@ -90,7 +89,7 @@ open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
     fun findPage(pathPieces: Array<String>): OrchidPage? {
         var page: OrchidPage? = null
         // we have a path to search
-        if (!EdenUtils.isEmpty(pathPieces) && !EdenUtils.isEmpty(pathPieces[0])) {
+        if (pathPieces.firstOrNull()?.isNotBlank() == true) {
             if (pathPieces.size == 1 && pathPieces[0] == ownKey) {
                 for (ownPage in getOwnPages()) {
                     if (ownPage.reference.originalFileName == pathPieces[0]) {
@@ -115,7 +114,7 @@ open class OrchidIndex(val parent: OrchidIndex?, val ownKey: String) {
     fun findIndex(pathPieces: Array<String>): OrchidIndex? {
         var foundIndex: OrchidIndex? = null
         // we have a path to search
-        if (!EdenUtils.isEmpty(pathPieces) && !EdenUtils.isEmpty(pathPieces[0])) {
+        if (pathPieces.firstOrNull()?.isNotBlank() == true) {
             if (pathPieces.size == 1 && pathPieces[0] == ownKey) {
                 foundIndex = this
             } else if (childrenPages.containsKey(pathPieces[1])) {

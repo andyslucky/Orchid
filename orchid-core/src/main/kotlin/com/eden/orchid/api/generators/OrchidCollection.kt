@@ -1,12 +1,7 @@
 package com.eden.orchid.api.generators
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.options.Descriptive
-import com.eden.orchid.utilities.camelCase
-import com.eden.orchid.utilities.from
-import com.eden.orchid.utilities.titleCase
-import com.eden.orchid.utilities.to
-import com.eden.orchid.utilities.with
+import com.eden.orchid.utilities.*
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -26,7 +21,7 @@ abstract class OrchidCollection<T : Collectible<*>>(
                 ?.with { capitalize() }
                 ?.to { titleCase() }
 
-            return if (!EdenUtils.isEmpty(collectionIdTitle) && collectionTypeTitle != collectionIdTitle) {
+            return if (collectionIdTitle?.isNotBlank() == true && collectionTypeTitle != collectionIdTitle) {
                 "$collectionTypeTitle > $collectionIdTitle"
             } else {
                 collectionTypeTitle

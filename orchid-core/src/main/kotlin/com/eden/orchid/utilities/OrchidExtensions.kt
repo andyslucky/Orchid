@@ -2,7 +2,6 @@ package com.eden.orchid.utilities
 
 import clog.Clog
 import clog.dsl.tag
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.OptionsHolder
 import com.eden.orchid.api.registration.OrchidModule
@@ -16,24 +15,21 @@ import java.util.regex.Pattern
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-fun String?.empty(): Boolean {
-    return EdenUtils.isEmpty(this)
-}
 
 fun String?.wrap(width: Int = 80): List<String> {
     val matchList = ArrayList<String>()
-    if (this != null) {
-        if (!this.empty()) {
-            val regex = Pattern.compile("(.{1,$width}(?:\\s|$))|(.{0,$width})", Pattern.DOTALL)
-            val regexMatcher = regex.matcher(this)
-            while (regexMatcher.find()) {
-                val line = regexMatcher.group().trim { it <= ' ' }
-                if (!EdenUtils.isEmpty(line)) {
-                    matchList.add(line)
-                }
+
+    if (this?.isNotBlank() == true) {
+        val regex = Pattern.compile("(.{1,$width}(?:\\s|$))|(.{0,$width})", Pattern.DOTALL)
+        val regexMatcher = regex.matcher(this)
+        while (regexMatcher.find()) {
+            val line = regexMatcher.group().trim { it <= ' ' }
+            if (line.isNotBlank()) {
+                matchList.add(line)
             }
         }
     }
+
 
     return matchList
 }

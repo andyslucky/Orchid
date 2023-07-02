@@ -1,7 +1,6 @@
 package com.eden.orchid.impl.compilers.sass
 
 import clog.Clog
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.compilers.OrchidCompiler
 import com.eden.orchid.api.options.annotations.Archetype
 import com.eden.orchid.api.options.archetypes.ConfigArchetype
@@ -58,7 +57,7 @@ constructor(
         val actualScssInput = if (extension == CompilerSyntax.SASS.ext) Compiler.sass2scss(input, 0) else input
 
         val result = try {
-            if (EdenUtils.isEmpty(sourceContext)) {
+            if (sourceContext.isBlank()) {
                 Compiler().compileString(actualScssInput, options).css
             } else {
                 Compiler().compileString(actualScssInput, URI(sourceContext), URI(sourceContext), options).css

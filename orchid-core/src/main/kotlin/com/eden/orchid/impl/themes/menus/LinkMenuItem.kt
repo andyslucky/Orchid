@@ -1,6 +1,5 @@
 package com.eden.orchid.impl.themes.menus
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.annotations.Description
 import com.eden.orchid.api.options.annotations.Option
@@ -10,7 +9,6 @@ import com.eden.orchid.api.theme.pages.OrchidExternalPage
 import com.eden.orchid.api.theme.pages.OrchidPage
 import com.eden.orchid.api.theme.pages.OrchidReference
 import com.eden.orchid.utilities.OrchidUtils
-import java.util.ArrayList
 
 @Description("A link to any generic URL.", name = "Link")
 class LinkMenuItem : OrchidMenuFactory("link") {
@@ -34,7 +32,7 @@ class LinkMenuItem : OrchidMenuFactory("link") {
 
         url = url.trim()
 
-        if (!EdenUtils.isEmpty(title) && !EdenUtils.isEmpty(url)) {
+        if (title.isNotBlank() && url.isNotBlank()) {
             var reference: OrchidReference? = null
 
             // if link is just a slash, it is a link to the homepage

@@ -1,7 +1,6 @@
 package com.eden.orchid.api.indexing
 
 import clog.Clog
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.generators.OrchidGenerator
 import com.eden.orchid.api.theme.pages.OrchidPage
@@ -118,7 +117,7 @@ class OrchidRootIndex(val context: OrchidContext, ownKey: String) : OrchidIndex(
             .flatMap { it.first.allPages.stream() }
             .filter { page ->
                 val outputPath = OrchidUtils.normalizePath(page.reference.path)
-                val outputName = if (EdenUtils.isEmpty(OrchidUtils.normalizePath(page.reference.outputExtension))) {
+                val outputName = if (OrchidUtils.normalizePath(page.reference.outputExtension)?.isNotBlank() == true) {
                     OrchidUtils.normalizePath(page.reference.fileName)
                 } else {
                     OrchidUtils.normalizePath(page.reference.fileName) + "." + OrchidUtils.normalizePath(
@@ -126,7 +125,7 @@ class OrchidRootIndex(val context: OrchidContext, ownKey: String) : OrchidIndex(
                     )
                 }
 
-                val pagePath = OrchidUtils.normalizePath(outputPath + "/" + outputName)
+                val pagePath = OrchidUtils.normalizePath("$outputPath/$outputName")
 
                 pagePath == requestedPath
             }

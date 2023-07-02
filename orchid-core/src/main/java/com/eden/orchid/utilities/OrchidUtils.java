@@ -10,27 +10,14 @@ import com.eden.orchid.api.options.OrchidFlags;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -41,7 +28,7 @@ public final class OrchidUtils {
 // constants
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static boolean isWindows = File.separator.equals("\\");
+    public static boolean isWindows = System.getProperty("os.name").matches("(?i)^Windows.*");
     public static int DEFAULT_PRIORITY = 100;
 
     public static final TableFormatter<String> defaultTableFormatter = (OrchidUtils.isWindows)

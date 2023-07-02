@@ -1,6 +1,5 @@
 package com.eden.orchid.api.options.archetypes
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.options.OptionArchetype
 import com.eden.orchid.api.options.annotations.Description
 import com.eden.orchid.api.options.annotations.EnvironmentVariableAliases
@@ -20,9 +19,7 @@ class EnvironmentVariableArchetype : OptionArchetype {
                 val envAliases = it.getAnnotation(EnvironmentVariableAliases::class.java).value.toList()
                 val intersection = allEnvironmentVariables.keys.intersect(envAliases)
 
-                val key: String = if (!EdenUtils.isEmpty(it.getAnnotation(Option::class.java).value)) {
-                    it.getAnnotation(Option::class.java).value
-                } else {
+                val key: String = it.getAnnotation(Option::class.java).value.ifBlank {
                     it.name
                 }
 
