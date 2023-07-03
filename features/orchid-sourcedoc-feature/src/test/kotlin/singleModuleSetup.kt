@@ -1,6 +1,7 @@
 package com.eden.orchid.sourcedoc
 
 import com.eden.orchid.testhelpers.OrchidIntegrationTest
+import java.util.*
 
 fun OrchidIntegrationTest.singleModuleSetup(
     type: String,
@@ -30,7 +31,7 @@ fun singleModuleGeneratorSetup(
     name: String? = null
 ): String {
     val sourcePaths = (listOf(type) + otherSourceKinds).map {
-        "\"./../../orchid-${it}doc-feature/src/mock${it.capitalize()}\""
+        "\"./../../orchid-${it}doc-feature/src/mock${it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}\""
     }.joinToString()
 
     if (name != null) {

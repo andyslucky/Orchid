@@ -31,6 +31,7 @@ internal class DefaultFlexibleResourceSource(
             ?: delegate.getResourceEntry(context, fullFileName)
     }
 
+    @Deprecated("Avoid looking up files outside of the resource root. Try to make locateResourceEntry() work instead.")
     override fun findClosestFile(
         context: OrchidContext,
         filename: String,

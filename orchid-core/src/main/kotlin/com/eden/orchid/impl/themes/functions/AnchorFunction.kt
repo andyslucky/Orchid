@@ -1,6 +1,5 @@
 package com.eden.orchid.impl.themes.functions
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.compilers.TemplateFunction
 import com.eden.orchid.api.indexing.IndexService
@@ -43,7 +42,7 @@ class AnchorFunction : TemplateFunction("anchor", true) {
     )
 
     override fun apply(context: OrchidContext, page: OrchidPage?): Any? {
-        if (EdenUtils.isEmpty(itemId) && !EdenUtils.isEmpty(title)) {
+        if (itemId.isBlank() && title.isNotBlank()) {
             itemId = title
         }
 

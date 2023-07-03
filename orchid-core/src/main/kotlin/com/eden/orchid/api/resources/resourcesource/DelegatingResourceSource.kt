@@ -2,7 +2,7 @@ package com.eden.orchid.api.resources.resourcesource
 
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.resources.resource.OrchidResource
-import java.util.TreeMap
+import java.util.*
 
 /**
  * An OrchidResourceSource which wraps other resource sources and combines elements from each. For locating a single
@@ -54,9 +54,7 @@ class DelegatingResourceSource(
         if (delegates != other.delegates) return false
         if (scopeFilter != other.scopeFilter) return false
         if (priority != other.priority) return false
-        if (scope != other.scope) return false
-
-        return true
+        return scope == other.scope
     }
 
     private val _hashcode by lazy {

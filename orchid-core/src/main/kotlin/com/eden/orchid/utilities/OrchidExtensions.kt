@@ -2,7 +2,6 @@ package com.eden.orchid.utilities
 
 import clog.Clog
 import clog.dsl.tag
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.OptionsHolder
 import com.eden.orchid.api.registration.OrchidModule
@@ -12,28 +11,26 @@ import com.google.inject.binder.LinkedBindingBuilder
 import org.apache.commons.lang3.StringUtils
 import java.io.ByteArrayInputStream
 import java.io.InputStream
+import java.util.*
 import java.util.regex.Pattern
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-fun String?.empty(): Boolean {
-    return EdenUtils.isEmpty(this)
-}
 
 fun String?.wrap(width: Int = 80): List<String> {
     val matchList = ArrayList<String>()
-    if (this != null) {
-        if (!this.empty()) {
-            val regex = Pattern.compile("(.{1,$width}(?:\\s|$))|(.{0,$width})", Pattern.DOTALL)
-            val regexMatcher = regex.matcher(this)
-            while (regexMatcher.find()) {
-                val line = regexMatcher.group().trim { it <= ' ' }
-                if (!EdenUtils.isEmpty(line)) {
-                    matchList.add(line)
-                }
+
+    if (this?.isNotBlank() == true) {
+        val regex = Pattern.compile("(.{1,$width}(?:\\s|$))|(.{0,$width})", Pattern.DOTALL)
+        val regexMatcher = regex.matcher(this)
+        while (regexMatcher.find()) {
+            val line = regexMatcher.group().trim { it <= ' ' }
+            if (line.isNotBlank()) {
+                matchList.add(line)
             }
         }
     }
+
 
     return matchList
 }
@@ -48,14 +45,13 @@ fun String.logSyntaxError(
 ) {
     val lineNumber = lineNumberNullable ?: 0
     val lines = this.lines()
-    val linesBeforeStart = Math.max(lineNumber - 3, 0)
-    val linesBeforeEnd = Math.max(lineNumber - 1, 0)
-    val linesAfterStart = lineNumber
-    val linesAfterEnd = Math.min(lineNumber + 5, lines.size)
+    val linesBeforeStart = (lineNumber - 3).coerceAtLeast(0)
+    val linesBeforeEnd = (lineNumber - 1).coerceAtLeast(0)
+    val linesAfterEnd = (lineNumber + 5).coerceAtMost(lines.size)
 
     val linesBefore = "   |" + lines.subList(linesBeforeStart, linesBeforeEnd).joinToString("\n   |")
     val errorLine = "#{\$0|fg('RED')}-->|#{\$0|reset}" + lines[linesBeforeEnd]
-    val linesAfter = "   |" + lines.subList(linesAfterStart, linesAfterEnd).joinToString("\n   |")
+    val linesAfter = "   |" + lines.subList(lineNumber, linesAfterEnd).joinToString("\n   |")
 
     val formattedMessage = """
         |_|   |.$extension error
@@ -137,7 +133,10 @@ fun String.filename(mapper: String.() -> String): Array<String> {
 
 // "to" mappers
 fun Array<String>.pascalCase(): String {
-    return map { it.toLowerCase().capitalize() }.joinToString(separator = "")
+    return map {
+        it.lowercase(Locale.getDefault())
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+    }.joinToString(separator = "")
 }
 
 fun List<String>.pascalCase(): String {
@@ -149,7 +148,7 @@ fun Array<String>.pascalCase(mapper: String.() -> String): String {
 }
 
 fun Array<String>.camelCase(): String {
-    return pascalCase().decapitalize()
+    return pascalCase().replaceFirstChar { it.lowercase(Locale.getDefault()) }
 }
 
 fun List<String>.camelCase(): String {
@@ -173,7 +172,7 @@ fun Array<String>.words(mapper: String.() -> String): String {
 }
 
 fun Array<String>.snakeCase(): String {
-    return map { it.toUpperCase() }.joinToString(separator = "_")
+    return joinToString(separator = "_") { it.uppercase(Locale.getDefault()) }
 }
 
 fun List<String>.snakeCase(): String {
@@ -197,7 +196,7 @@ fun Array<String>.dashCase(mapper: String.() -> String): String {
 }
 
 fun Array<String>.slug(): String {
-    return dashCase().toLowerCase()
+    return dashCase().lowercase(Locale.getDefault())
 }
 
 fun List<String>.slug(): String {
@@ -209,7 +208,7 @@ fun Array<String>.slug(mapper: String.() -> String): String {
 }
 
 fun Array<String>.titleCase(): String {
-    return joinToString(separator = " ", transform = { it.capitalize() })
+    return joinToString(separator = " ", transform = { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } })
 }
 
 fun List<String>.titleCase(): String {

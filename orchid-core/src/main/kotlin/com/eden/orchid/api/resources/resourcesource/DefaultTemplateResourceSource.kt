@@ -60,9 +60,7 @@ internal class DefaultTemplateResourceSource(
         other as DefaultTemplateResourceSource
 
         if (theme != other.theme) return false
-        if (delegate != other.delegate) return false
-
-        return true
+        return delegate == other.delegate
     }
 
     private val _hashcode by lazy {

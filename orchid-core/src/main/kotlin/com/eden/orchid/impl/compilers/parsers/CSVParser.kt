@@ -9,8 +9,6 @@ import com.univocity.parsers.tsv.TsvParser
 import com.univocity.parsers.tsv.TsvParserSettings
 import org.apache.commons.io.IOUtils
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
-import java.util.HashMap
 import javax.inject.Inject
 
 @Archetype(value = ConfigArchetype::class, key = "services.parsers.csv")
@@ -53,7 +51,7 @@ constructor() : OrchidParser() {
         }
 
         val rows = HashMap<String, Any>()
-        rows[OrchidParser.arrayAsObjectKey] = array
+        rows[arrayAsObjectKey] = array
         return rows
     }
 

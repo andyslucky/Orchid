@@ -63,9 +63,7 @@ class CommonExternalAliasesResourceSource(
         other as CommonExternalAliasesResourceSource
 
         if (priority != other.priority) return false
-        if (scope != other.scope) return false
-
-        return true
+        return scope == other.scope
     }
 
     private val _hashcode by lazy {

@@ -9,6 +9,7 @@ import com.eden.orchid.api.theme.menus.OrchidMenuFactory
 import com.eden.orchid.api.theme.pages.OrchidPage
 import com.eden.orchid.sourcedoc.model.SourceDocModel
 import com.eden.orchid.sourcedoc.page.SourceDocPage
+import java.util.*
 
 @Description(
     "Locate all source pages of a given kind.",
@@ -72,7 +73,8 @@ class SourceDocPagesMenuItemType : OrchidMenuFactory("sourcedocPages") {
                 module
                     .nodes
                     .map { node ->
-                        val nodeTitle = "All ${node.key.name.capitalize()}"
+                        val nodeTitle =
+                            "All ${node.key.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }}"
                         val nodePages = node.value.sortedBy { it.title }
 
                         MenuItem.Builder(context)

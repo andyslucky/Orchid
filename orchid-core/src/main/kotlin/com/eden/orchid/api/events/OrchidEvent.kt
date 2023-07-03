@@ -1,6 +1,7 @@
 package com.eden.orchid.api.events
 
 import com.eden.orchid.api.OrchidContext
+import java.util.*
 
 /**
  * A generic representation of an Event used to communicate intended or completed actions and extend core functionality.
@@ -39,7 +40,7 @@ abstract class OrchidEvent<T> {
      * @since v1.0.0
      */
     constructor(sender: T?) {
-        this.type = this.javaClass.simpleName.toLowerCase().replace("Event".toRegex(), "")
+        this.type = this.javaClass.simpleName.lowercase(Locale.getDefault()).replace("Event".toRegex(), "")
         this.sender = sender
     }
 
