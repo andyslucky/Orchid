@@ -42,7 +42,7 @@ constructor() : OrchidParser() {
         // If it fails to parse as JSON Object and throws exception, try again as JSON Array
         try {
             val jsonObject = JSONObject()
-            jsonObject.put(OrchidParser.arrayAsObjectKey, JSONArray(input))
+            jsonObject.put(arrayAsObjectKey, JSONArray(input))
             return jsonObject.toMap()
         } catch (e: Exception) {
             logJsonSyntaxError(extension, input, e.message ?: "")

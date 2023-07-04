@@ -22,13 +22,9 @@ import com.eden.orchid.posts.pages.AuthorPage
 import com.eden.orchid.posts.pages.PostPage
 import com.eden.orchid.posts.utils.PostsUtils
 import com.eden.orchid.posts.utils.isToday
-import com.eden.orchid.utilities.OrchidUtils
-import com.eden.orchid.utilities.dashCase
-import com.eden.orchid.utilities.from
-import com.eden.orchid.utilities.titleCase
-import com.eden.orchid.utilities.to
-import com.eden.orchid.utilities.words
+import com.eden.orchid.utilities.*
 import java.time.LocalDate
+import java.util.*
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -156,7 +152,13 @@ constructor(
             val matcher = pageTitleRegex.matcher(formattedFilename)
 
             if (matcher.matches()) {
-                val title = matcher.group(PageTitleGrp.TITLE.ordinal).from { dashCase() }.to { words { capitalize() } }
+                val title = matcher.group(PageTitleGrp.TITLE.ordinal).from { dashCase() }.to { words {
+                    replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    }
+                } }
                 val post = PostPage(entry, categoryModel, title)
 
                 if (post.publishDate.toLocalDate().isToday()) {

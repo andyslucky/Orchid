@@ -1,6 +1,5 @@
 package com.eden.orchid.api.resources.resource
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.compilers.OrchidPrecompiler
 import com.eden.orchid.api.theme.pages.OrchidReference
@@ -37,7 +36,7 @@ abstract class OrchidResource(
 
     open fun compileContent(context: OrchidContext, data: Any?): String {
         var compiledContent = content
-        return if (!EdenUtils.isEmpty(compiledContent)) {
+        return if (compiledContent.isNotBlank()) {
             if (shouldPrecompile()) {
                 compiledContent = context.compile(this, precompilerExtension, compiledContent, data)
             }
@@ -54,7 +53,7 @@ abstract class OrchidResource(
 
     open fun parseContent(context: OrchidContext, data: Any?): Map<String, Any>? {
         var compiledContent = content
-        return if (!EdenUtils.isEmpty(compiledContent)) {
+        return if (compiledContent.isNotBlank()) {
             if (shouldPrecompile()) {
                 compiledContent = context.compile(this, precompilerExtension, compiledContent, data)
             }

@@ -8,6 +8,7 @@ import com.eden.orchid.api.theme.assets.AssetManagerDelegate
 import com.eden.orchid.api.theme.components.ComponentHolder
 import com.eden.orchid.sourcedoc.functions.SourcedocAnchorFunction.Companion.renderToString
 import com.eden.orchid.utilities.OrchidUtils
+import java.util.*
 
 class SourceDocPage<T : DocElement>(
     resource: SourceDocResource<*>,
@@ -42,7 +43,13 @@ class SourceDocPage<T : DocElement>(
 
     override fun getTemplates(): List<String> {
         return listOf(
-            "${generator.key.decapitalize()}${element.kind.capitalize()}",
+            "${generator.key.replaceFirstChar { it.lowercase(Locale.getDefault()) }}${
+                element.kind.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }
+            }",
             "sourceDocPage"
         )
     }

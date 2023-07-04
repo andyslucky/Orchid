@@ -1,6 +1,5 @@
 package com.eden.orchid.impl.themes.menus
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.annotations.Description
 import com.eden.orchid.api.options.annotations.Option
@@ -58,7 +57,7 @@ class PageMenuItem : OrchidMenuFactory("page") {
                 item.page(loadedPage)
             }
 
-            if (!EdenUtils.isEmpty(title)) {
+            if (title.isNotBlank()) {
                 item.title(title)
             }
 

@@ -10,6 +10,7 @@ import com.eden.orchid.api.theme.menus.OrchidMenu
 import com.eden.orchid.api.theme.menus.OrchidMenuFactory
 import com.eden.orchid.api.theme.pages.OrchidPage
 import com.eden.orchid.sourcedoc.page.SourceDocPage
+import java.util.*
 
 @Description(
     "Links to the source elements within a Sourcedoc page, optionally with their items nested " +
@@ -56,7 +57,7 @@ class SourceDocPageLinksMenuItemType : OrchidMenuFactory("sourcedocPageLinks") {
 
             for (section in pageSections) {
                 val menuItem = MenuItem.Builder(context)
-                    .title(section.name.capitalize())
+                    .title(section.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
                     .anchor(containingPage.sectionId(section))
 
                 if (includeItems) {

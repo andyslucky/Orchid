@@ -3,8 +3,8 @@ package com.eden.orchid.kss.parser
 import com.eden.common.util.EdenPair
 import com.eden.common.util.EdenUtils
 import org.apache.commons.lang3.StringUtils
+import java.util.*
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
 class StyleguideSection(val raw: String, val filename: String) {
 
@@ -78,7 +78,7 @@ class StyleguideSection(val raw: String, val filename: String) {
             // Line is tagged section, leave for now until needed
             if (isTaggedSection(section)) {
                 val taggedSection = parseTaggedSection(section)
-                tags.put(taggedSection!!.first.toLowerCase(), taggedSection.second)
+                tags.put(taggedSection!!.first.lowercase(Locale.getDefault()), taggedSection.second)
                 continue
             }
 
@@ -99,7 +99,7 @@ class StyleguideSection(val raw: String, val filename: String) {
     }
 
     fun getTaggedSection(sectionKey: String): String {
-        return tags.getOrDefault(sectionKey.toLowerCase(), "")
+        return tags.getOrDefault(sectionKey.lowercase(Locale.getDefault()), "")
     }
 
     fun formatMarkup(modifier: Modifier): String {

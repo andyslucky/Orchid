@@ -1,7 +1,6 @@
 package com.eden.orchid.impl.publication
 
 import clog.Clog
-import com.eden.common.util.EdenUtils
 import com.eden.common.util.IOStreamUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.ValidationError
@@ -34,7 +33,7 @@ class ScriptPublisher : OrchidPublisher("script") {
         val builder = ProcessBuilder()
         builder.command(*command.toTypedArray())
         var directory: String
-        if (!EdenUtils.isEmpty(cwd)) {
+        if (cwd.isNotBlank()) {
             directory = cwd
             if (directory.startsWith("~")) {
                 directory = System.getProperty("user.home") + directory.substring(1)

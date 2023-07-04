@@ -52,7 +52,7 @@ constructor(
             val asciiTable = OrchidUtils.defaultTableFormatter.print(table)
             Clog.i("\n{}", asciiTable)
 
-            if (server != null && server.websocket != null) {
+            if (server?.websocket != null) {
                 val htmlTable = HtmlTableFormatter(
                     attrs = object : DefaultHtmlAttributes() {
                         override val tableClasses = listOf("table")

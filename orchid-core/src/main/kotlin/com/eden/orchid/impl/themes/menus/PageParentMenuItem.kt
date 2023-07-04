@@ -1,6 +1,5 @@
 package com.eden.orchid.impl.themes.menus
 
-import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.options.annotations.Description
 import com.eden.orchid.api.options.annotations.Option
@@ -39,7 +38,7 @@ class PageParentMenuItem : OrchidMenuFactory("pageParent") {
 
         return if (foundPage.parent != null) {
             val item = MenuItem.Builder(context).page(foundPage.parent)
-            if (!EdenUtils.isEmpty(title)) {
+            if (title.isNotBlank()) {
                 item.title(title)
             }
             listOf(item.build())

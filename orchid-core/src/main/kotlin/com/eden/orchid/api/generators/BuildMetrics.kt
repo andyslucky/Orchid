@@ -161,7 +161,7 @@ constructor(val context: OrchidContext) {
         this.generatorMetricsMap = generatorMetricsMap
     }
 
-    fun getGeneratorMetricsMap(): Map<String, GeneratorMetrics>? {
+    fun getGeneratorMetricsMap(): Map<String, GeneratorMetrics> {
         return this.generatorMetricsMap
     }
 }

@@ -9,7 +9,6 @@ import com.eden.orchid.utilities.OrchidUtils
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.nio.file.Path
-import java.util.ArrayList
 
 /**
  * An OrchidResourceSource that loads resource files from a directory on disk.
@@ -86,9 +85,7 @@ class FileResourceSource(
 
         if (baseDirectory != other.baseDirectory) return false
         if (priority != other.priority) return false
-        if (scope != other.scope) return false
-
-        return true
+        return scope == other.scope
     }
 
     private val _hashcode by lazy {

@@ -8,23 +8,19 @@ import org.junit.jupiter.api.BeforeEach
 interface BaseOrchidTest {
 
     @BeforeEach
-    @JvmDefault
     fun baseSetUp() {
         disableLogging()
     }
 
     @AfterEach
-    @JvmDefault
     fun baseTearDown() {
         enableLogging()
     }
 
-    @JvmDefault
     fun disableLogging() {
         Clog.setMinPriority(Clog.Priority.FATAL)
     }
 
-    @JvmDefault
     fun enableLogging() {
         Clog.setMinPriority(Clog.Priority.VERBOSE)
     }

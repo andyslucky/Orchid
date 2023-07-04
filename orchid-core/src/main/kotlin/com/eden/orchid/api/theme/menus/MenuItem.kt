@@ -4,8 +4,6 @@ import com.eden.common.util.EdenUtils
 import com.eden.orchid.api.OrchidContext
 import com.eden.orchid.api.indexing.OrchidIndex
 import com.eden.orchid.api.theme.pages.OrchidPage
-import java.util.ArrayList
-import java.util.Comparator
 
 class MenuItem private constructor(
     val context: OrchidContext,
@@ -32,13 +30,13 @@ class MenuItem private constructor(
 
     val link: String
         get() = if (page != null) {
-            if (!EdenUtils.isEmpty(anchor)) {
+            if (anchor.isNotBlank()) {
                 "${page.link}#$anchor"
             } else {
                 page.link
             }
         } else {
-            if (!EdenUtils.isEmpty(anchor)) {
+            if (anchor.isNotBlank()) {
                 "#$anchor"
             } else {
                 ""
@@ -86,8 +84,8 @@ class MenuItem private constructor(
         return allData[key]
     }
 
-    fun toBuilder(): MenuItem.Builder {
-        return MenuItem.Builder(context)
+    fun toBuilder(): Builder {
+        return Builder(context)
             .title(title)
             .page(page)
             .children(children)
@@ -101,7 +99,7 @@ class MenuItem private constructor(
 // ---------------------------------------------------------------------------------------------------------------------
 
     class Builder(val context: OrchidContext) {
-        var children: MutableList<MenuItem.Builder>? = null
+        var children: MutableList<Builder>? = null
         var page: OrchidPage? = null
         var anchor: String? = null
         var title: String? = null
@@ -138,7 +136,7 @@ class MenuItem private constructor(
             return this
         }
 
-        fun childrenBuilders(children: MutableList<MenuItem.Builder>): Builder {
+        fun childrenBuilders(children: MutableList<Builder>): Builder {
             this.children = children
             return this
         }
@@ -148,7 +146,7 @@ class MenuItem private constructor(
             return this
         }
 
-        fun child(child: MenuItem.Builder): Builder {
+        fun child(child: Builder): Builder {
             if (children == null) {
                 children = ArrayList()
             }
@@ -196,11 +194,11 @@ class MenuItem private constructor(
         }
 
         fun build(): MenuItem {
-            if (EdenUtils.isEmpty(title) && page != null) {
+            if (title.isNullOrBlank() && page != null) {
                 title = page!!.title
             }
 
-            if (EdenUtils.isEmpty(title) && !EdenUtils.isEmpty(anchor)) {
+            if (title.isNullOrBlank() && !anchor.isNullOrBlank()) {
                 title = anchor
             }
 

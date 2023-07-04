@@ -37,9 +37,7 @@ class SubdirectoryResourceSource(
         other as SubdirectoryResourceSource
 
         if (delegate != other.delegate) return false
-        if (subDirectory != other.subDirectory) return false
-
-        return true
+        return subDirectory == other.subDirectory
     }
 
     private val _hashcode by lazy {

@@ -12,12 +12,10 @@ interface AdminList : Descriptive {
     val items: Collection<Class<*>?>
     val isImportantType: Boolean
 
-    @JvmDefault
     override fun getDescriptiveName(): String {
         return Descriptive.getDescriptiveName(listClass)
     }
 
-    @JvmDefault
     override fun getDescription(): String {
         return Descriptive.getDescription(listClass)
     }

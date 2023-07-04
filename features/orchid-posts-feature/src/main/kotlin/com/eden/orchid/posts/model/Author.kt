@@ -11,6 +11,7 @@ import com.eden.orchid.api.theme.models.Social
 import com.eden.orchid.posts.pages.AuthorPage
 import java.net.URLEncoder
 import java.security.MessageDigest
+import java.util.*
 import kotlin.text.Charsets.UTF_8
 
 class Author : OptionsHolder {
@@ -29,10 +30,10 @@ class Author : OptionsHolder {
             if (email.isNotBlank()) {
                 val hash = MessageDigest
                     .getInstance("MD5")
-                    .digest(email.trim().toLowerCase().toByteArray(UTF_8))
+                    .digest(email.trim().lowercase(Locale.getDefault()).toByteArray(UTF_8))
                     .toHex()
 
-                var gravatarUrl = "https://www.gravatar.com/avatar/${hash.toLowerCase()}"
+                var gravatarUrl = "https://www.gravatar.com/avatar/${hash.lowercase(Locale.getDefault())}"
 
                 if (gravatarDefault.isNotBlank()) {
                     gravatarUrl += "?d=${URLEncoder.encode(gravatarDefault, "UTF-8")}"

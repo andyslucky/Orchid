@@ -24,7 +24,7 @@ class ExcerptFunction : TemplateFunction("excerpt", false) {
 
     override fun parameters() = arrayOf(::input.name, ::excerptSeparator.name)
 
-    override fun apply(context: OrchidContext, page: OrchidPage?): Any? {
+    override fun apply(context: OrchidContext, page: OrchidPage?): Any {
         if (input != null && input is OrchidPage) {
             return getExcerpt(input as OrchidPage)
         } else if (page != null) {
