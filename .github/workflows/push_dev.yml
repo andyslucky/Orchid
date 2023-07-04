@@ -1,4 +1,4 @@
-name: Check
+name: Build and Test
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        jdk_version: ['8', '9', '13', '16']
+        jdk_version: ['8', '11', '17']
         os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
     steps:
       - uses: 'actions/checkout@v2'
@@ -22,31 +22,31 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.jdk_version }}
       - name: 'Build with Gradle'
-        run: './gradlew assemble'
+        run: './gradlew build'
       - name: 'Run checks with Gradle'
         run: './gradlew check'
-  publishSnapshots:
-    needs: test
-    name: 'Publish snapshots on macos-latest JDK 8'
-    runs-on: 'macos-latest'
-    steps:
-      - uses: 'actions/checkout@v2'
-      - run: 'git fetch --prune --unshallow --tags'
-      - name: 'Set up JDK'
-        uses: 'actions/setup-java@v2'
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: 'Build with Gradle'
-        run: './gradlew assemble'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 'Publish snapshot artifacts'
-        run: './gradlew publishAllPublicationsToMavenCentralSnapshotsRepository'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+#  publishSnapshots:
+#    needs: test
+#    name: 'Publish snapshots on macos-latest JDK 8'
+#    runs-on: 'macos-latest'
+#    steps:
+#      - uses: 'actions/checkout@v2'
+#      - run: 'git fetch --prune --unshallow --tags'
+#      - name: 'Set up JDK'
+#        uses: 'actions/setup-java@v2'
+#        with:
+#          distribution: 'adopt'
+#          java-version: '8'
+#      - name: 'Build with Gradle'
+#        run: './gradlew assemble'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: 'Publish snapshot artifacts'
+#        run: './gradlew publishAllPublicationsToMavenCentralSnapshotsRepository'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+#          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+#          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+#          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
